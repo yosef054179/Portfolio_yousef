@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travolo - Your Journey Begins With Us</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            background: linear-gradient(180deg, #fffdfb 0%, #f7f1ee 100%);
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 12px rgba(18, 26, 38, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #111827;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-icon {
+            color: #ff6b4a;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #ff6b4a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1f2937 0%, #2f3d4d 100%);
+            color: white;
+            padding: 80px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 40px 0 40px;
+            border-radius: 18px;
+            gap: 60px;
+            box-shadow: 0 18px 36px rgba(31, 41, 55, 0.18);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 4vw, 4rem);
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: #dfe7ef;
+            margin-bottom: 35px;
+            line-height: 1.8;
+            max-width: 580px;
+        }
+
+        .btn-explore {
+            background: linear-gradient(135deg, #ff7b5a 0%, #ff5b3d 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 13px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            font-weight: 700;
+            box-shadow: 0 10px 22px rgba(255, 91, 61, 0.32);
+        }
+
+        .btn-explore:hover {
+            background: linear-gradient(135deg, #ff693f 0%, #ec4d2c 100%);
+            transform: translateY(-1px);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            font-size: 200px;
+            line-height: 1;
+            min-height: 300px;
+        }
+
+        .hero-image img {
+            max-width: 250px;
+            height: auto;
+        }
+
+        /* Services Grid */
+        .services {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 25px;
+            margin: 40px 40px;
+            padding: 0;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:first-child {
+            grid-row: span 2;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .service-card:first-child img {
+            height: 280px;
+        }
+
+        .service-card-text {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .service-card p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 80px 60px;
+            margin: 40px 40px;
+            border-radius: 8px;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 70px;
+            color: #222;
+            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            transition: transform 0.3s;
+        }
+
+        .feature-icon.luggage {
+            background: linear-gradient(135deg, #5b9ef5 0%, #4a7fd7 100%);
+            color: white;
+        }
+
+        .feature-icon.passport {
+            background: linear-gradient(135deg, #6bb3f5 0%, #5a9fe0 100%);
+            color: white;
+        }
+
+        .feature-icon.sunset {
+            background: linear-gradient(135deg, #ff9d4f 0%, #ff8a3d 100%);
+            color: white;
+        }
+
+        .feature-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .feature p {
+            color: #888;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: #ccc;
+            padding: 50px 60px 30px;
+            margin-top: 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 15px;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ff6b4a;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            width: 30px;
+            height: 30px;
+            background-color: #ff6b4a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 20px;
+            }
+
+            .hero {
+                flex-direction: column;
+                padding: 40px 20px;
+                margin: 20px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .services {
+                grid-template-columns: 1fr;
+                margin: 20px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-top {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo"><span class="logo-icon">✈</span> Travolo</div>
+        <ul>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Make every trip feel personal.</h1>
+            <p>From the first idea to the final boarding pass, we help you plan smooth, memorable journeys with a touch that feels genuinely yours.</p>
+            <button class="btn-explore">Plan Your Trip</button>
+        </div>
+        <div class="hero-image">
+            <img src="hero-img (1).png" alt="Travel Luggage">
+        </div>
+    </section>
+    <!-- Services Grid -->
+    <section class="services">
+        <div class="service-card">
+            <img src="airplane (1).png" alt="Flight Booking">
+            <div class="service-card-text">
+                <h3>Flight Booking</h3>
+                <p>Find the best routes, flexible options, and smooth departures for your next getaway.</p>
+            </div>
+        </div>
+        <div class="service-card">
+            <img src="map (1).png" alt="Top Flights">
+            <div class="service-card-text">
+                <h3>Top Picks</h3>
+                <p>Explore the destinations people love most and choose the trip that matches your style.</p>
+            </div>
+        </div>
+        <div class="service-card">
+            <img src="travel (1).png" alt="Unique Experiences">
+            <div class="service-card-text">
+                <h3>Memorable Moments</h3>
+                <p>Turn simple travel into stories worth sharing, with surprises around every corner.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="features-title">Why people choose us</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon luggage">🧳</div>
+                <h3>Travel Support</h3>
+                <p>We handle the details that matter most so your trip feels relaxed from departure to arrival.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon passport">🛂</div>
+                <h3>Visa Guidance</h3>
+                <p>Our team helps you stay informed on travel requirements and documentation with clarity.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon sunset">🌅</div>
+                <h3>Beautiful Escapes</h3>
+                <p>Enjoy scenic destinations and unforgettable views that make the journey feel extraordinary.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-section">
+                <h4>About Travolo</h4>
+                <p>Travolo was built for people who want travel to feel easy, exciting, and truly personal from the very first click.</p>
+                <div class="social-icons">
+                    <a href="#facebook">f</a>
+                    <a href="#twitter">𝕏</a>
+                    <a href="#instagram">📷</a>
+                    <a href="#pinterest">📌</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul>
+                    <li>Email: hello@travolo.com</li>
+                    <li>Phone: +966 11 4628686</li>
+                    <li>Address: Riyadh, Saudi Arabia</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <ul>
+                    <li>Mon - Fri: 9AM - 10PM</li>
+                    <li>Sat - Sun: 2PM - 10PM</li>
+                    <li>Holidays: Closed</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Travolo. Crafted for real journeys.</p>
+        </div>
+    </footer>
+</body>
+</html>

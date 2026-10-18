@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yousef Hamdey | Software Developer | CS Student Portfolio</title>
+  <meta name="description" content="Portfolio of Yousef Hamdey - Computer Science & Information Systems student, CS50 Harvard alum, software developer focused on Python, C, Java, JavaScript, and web development.">
+
+  <!-- Google Fonts: Cairo (Arabic), Plus Jakarta Sans (English), Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6.5.1 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#06b6d4',
+              purple: '#8b5cf6',
+              indigo: '#6366f1',
+              emerald: '#10b981',
+              dark: '#070a13',
+              card: '#0f172a',
+              border: 'rgba(255, 255, 255, 0.08)'
+            }
+          },
+          fontFamily: {
+            ar: ['Cairo', 'sans-serif'],
+            en: ['Plus Jakarta Sans', 'sans-serif'],
+            code: ['Fira Code', 'monospace']
+          },
+          animation: {
+            'glow-pulse': 'glowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 5s ease-in-out infinite',
+            'float-slow': 'float 7s ease-in-out infinite',
+            'spin-slow': 'spin 18s linear infinite'
+          },
+          keyframes: {
+            glowPulse: {
+              '0%, 100%': { opacity: 0.35, transform: 'scale(1)' },
+              '50%': { opacity: 0.75, transform: 'scale(1.06)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Global Base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #070a13;
+      color: #e2e8f0;
+      overflow-x: hidden;
+      font-family: 'Cairo', sans-serif;
+      transition: font-family 0.3s ease;
+    }
+
+    body.lang-en {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Glassmorphism Styles */
+    .glass-nav {
+      background: rgba(11, 16, 32, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      will-change: padding, box-shadow;
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+      will-change: transform;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.45);
+      box-shadow: 0 12px 35px -10px rgba(99, 102, 241, 0.3), 0 0 25px 2px rgba(6, 182, 212, 0.18);
+      transform: translateY(-5px);
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glowing Profile Image Frame */
+    .profile-glow-wrapper {
+      position: relative;
+    }
+    .profile-glow-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 2rem;
+      background: linear-gradient(135deg, #06b6d4, #6366f1, #a855f7);
+      z-index: 0;
+      opacity: 0.8;
+      filter: blur(12px);
+      transition: opacity 0.3s ease;
+    }
+    .profile-glow-wrapper:hover::before {
+      opacity: 1;
+      filter: blur(16px);
+    }
+
+    /* Cursor Follower - GPU accelerated */
+    .cursor-dot, .cursor-circle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      will-change: transform;
+      backface-visibility: hidden;
+      transform: translate3d(-100px, -100px, 0);
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8, 0 0 20px #818cf8;
+      margin: -4px 0 0 -4px;
+    }
+    .cursor-circle {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      margin: -18px 0 0 -18px;
+      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background 0.2s, margin 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cursor-hover .cursor-circle {
+      width: 52px;
+      height: 52px;
+      margin: -26px 0 0 -26px;
+      border-color: #c084fc;
+      background: rgba(192, 132, 252, 0.1);
+    }
+
+    @media (pointer: coarse) {
+      .cursor-dot, .cursor-circle {
+        display: none !important;
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070a13;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Ambient Glow Blobs - GPU composited */
+    .glow-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate3d(0, 0, 0);
+      will-change: transform, opacity;
+      contain: strict;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Scroll Progress Bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3.5px;
+      background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
+      z-index: 10000;
+      transition: width 0.1s ease-out;
+    }
+
+    /* Reveal On Scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Typewriter Cursor */
+    .typed-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: #38bdf8;
+      vertical-align: -0.15em;
+      animation: blink 0.9s infinite;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-[#070a13] text-slate-100 antialiased selection:bg-cyan-500 selection:text-black">
+
+  <!-- Interactive Scroll Progress -->
+  <div id="scrollProgress"></div>
+
+  <!-- Custom Glowing Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-circle" id="cursorCircle"></div>
+
+  <!-- Background Interactive Particles Canvas -->
+  <canvas id="particlesCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+
+  <!-- Ambient Glow Background Spots -->
+  <div class="fixed top-1/4 -left-32 w-96 h-96 bg-cyan-600/15 glow-blob animate-glow-pulse"></div>
+  <div class="fixed top-2/3 -right-32 w-96 h-96 bg-purple-600/15 glow-blob animate-glow-pulse" style="animation-delay: 2s;"></div>
+  <div class="fixed -bottom-32 left-1/3 w-96 h-96 bg-indigo-600/15 glow-blob animate-glow-pulse" style="animation-delay: 3s;"></div>
+
+  <!-- ==================== HEADER / NAVBAR ==================== -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-3.5 group">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 p-[1.5px] transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3 shadow-lg shadow-cyan-500/20">
+          <div class="w-full h-full bg-[#0b0f19] rounded-[10px] flex items-center justify-center">
+            <img src="assets/profile.png" alt="Yousef Hamdey" class="w-full h-full rounded-[10px] object-cover object-top">
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg tracking-wide text-white group-hover:text-cyan-400 transition-colors">
+            <span data-i18n="name">Yousef Hamdey</span>
+          </span>
+          <span class="text-xs text-slate-400 font-mono tracking-wider" data-i18n="role-badge">Software Developer</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-about">عنّي</a>
+        <a href="#experience" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-experience">الخبرات</a>
+        <a href="#education" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-education">التعليم والشهادات</a>
+        <a href="#skills" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-skills">المهارات</a>
+        <a href="#projects" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-projects">المشاريع</a>
+        <a href="#contact" class="hover:text-cyan-400 transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-cyan-400 after:scale-x-0 hover:after:scale-x-100 after:transition-transform" data-i18n="nav-contact">تواصل معي</a>
+      </nav>
+
+      <!-- Right Buttons (Language & Contact CTA) -->
+      <div class="flex items-center gap-3">
+        <!-- Language Switcher Button -->
+        <button id="langToggle" class="px-3.5 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs font-semibold text-cyan-400 flex items-center gap-2 transition-all shadow-sm hover:border-cyan-500/50">
+          <i class="fa-solid fa-globe text-sm"></i>
+          <span id="langLabel">English</span>
+        </button>
+
+        <!-- CTA WhatsApp Button -->
+        <a href="https://wa.me/201158069575" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-xs shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:-translate-y-0.5 transition-all">
+          <i class="fa-brands fa-whatsapp text-sm"></i>
+          <span data-i18n="btn-whatsapp">تواصل واتساب</span>
+        </a>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white">
+          <i class="fa-solid fa-bars-staggered text-lg"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileMenu" class="md:hidden hidden bg-[#0b0f19]/95 backdrop-blur-xl border-b border-slate-800 px-6 py-6 transition-all">
+      <div class="flex flex-col gap-4 text-base font-medium">
+        <a href="#about" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-about">عنّي</a>
+        <a href="#experience" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-experience">الخبرات</a>
+        <a href="#education" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-education">التعليم والشهادات</a>
+        <a href="#skills" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-skills">المهارات</a>
+        <a href="#projects" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-projects">المشاريع</a>
+        <a href="#contact" class="mobile-link text-slate-300 hover:text-cyan-400 transition-colors py-1" data-i18n="nav-contact">تواصل معي</a>
+        <a href="https://wa.me/201158069575" target="_blank" class="mobile-link mt-2 w-full text-center py-2.5 rounded-lg bg-emerald-500 text-white font-bold flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp"></i>
+          <span data-i18n="btn-whatsapp">تواصل واتساب</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="relative z-10 pt-28">
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero" class="min-h-[calc(100vh-7rem)] flex items-center relative py-12 lg:py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          <!-- Hero Text Details -->
+          <div class="lg:col-span-7 flex flex-col items-start space-y-6 order-2 lg:order-1">
+            
+            <!-- Open to Opportunities Status -->
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold shadow-inner">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span data-i18n="hero-status">متاح الآن لفرص التدريب والتوظيف • Open to Junior Developer Roles</span>
+            </div>
+
+            <!-- Main Heading & Typewriter -->
+            <div class="space-y-3">
+              <h2 class="text-lg sm:text-xl font-mono text-cyan-400 tracking-wide" data-i18n="hero-greeting">
+                مرحباً بك، أنا
+              </h2>
+              <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                <span data-i18n="name">Yousef Hamdey</span>
+              </h1>
+              <div class="text-xl sm:text-3xl lg:text-4xl font-bold text-slate-300 min-h-[3rem] flex items-center flex-wrap">
+                <span class="text-slate-400 mr-2 ml-2" data-i18n="hero-i-am">أنا</span>
+                <span id="typedText" class="gradient-text font-extrabold"></span>
+                <span class="typed-cursor"></span>
+              </div>
+            </div>
+
+            <!-- Professional Summary from CV -->
+            <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl" data-i18n="hero-summary">
+              طالب في السنة الثالثة بقسم علوم الحاسب ونظم المعلومات في أكاديمية طيبة. أمتلك أساساً برمجياً قوياً وحباً حقيقياً لحل المشكلات وكتابة الأكواد بفضل دراستي وتدريبي في CS50 بجامعة هارفارد، متقن للغات Python و C و Java و JavaScript و HTML.
+            </p>
+
+            <!-- Direct Contact Quick Badges -->
+            <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-400 pt-1">
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                <i class="fa-solid fa-phone text-emerald-400"></i>
+                <span dir="ltr">01158069575</span>
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                <i class="fa-solid fa-envelope text-cyan-400"></i>
+                <span>kodousyosefhamdey@gmail.com</span>
+              </div>
+              <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800">
+                <i class="fa-solid fa-graduation-cap text-purple-400"></i>
+                <span data-i18n="hero-quick-edu">أكاديمية طيبة - الفرقة الثالثة</span>
+              </div>
+            </div>
+
+            <!-- Call-to-Action Buttons -->
+            <div class="flex flex-wrap items-center gap-4 pt-3 w-full sm:w-auto">
+              <!-- WhatsApp direct button -->
+              <a href="https://wa.me/201158069575" target="_blank" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white font-bold text-sm shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/50 hover:scale-[1.02] active:scale-95 transition-all text-center flex items-center justify-center gap-2.5">
+                <i class="fa-brands fa-whatsapp text-base"></i>
+                <span data-i18n="hero-btn-whatsapp">تواصل عبر واتساب</span>
+              </a>
+
+              <!-- Contact Form Scroll Button -->
+              <a href="#contact" class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 hover:border-slate-500 text-slate-200 font-bold text-sm transition-all text-center flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-95">
+                <i class="fa-regular fa-paper-plane text-cyan-400"></i>
+                <span data-i18n="hero-btn-contact">أرسل رسالة</span>
+              </a>
+
+              <!-- CV Download -->
+              <a href="Yousef-Hamdey-CV.txt" download class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/90 border border-slate-800 text-slate-300 font-semibold text-sm transition-all text-center flex items-center justify-center gap-2 hover:text-cyan-300">
+                <i class="fa-solid fa-download text-indigo-400 text-xs"></i>
+                <span data-i18n="hero-btn-cv">تحميل السيرة الذاتية</span>
+              </a>
+
+              <!-- Projects Button -->
+              <a href="#projects" class="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/90 border border-slate-800 text-slate-300 font-semibold text-sm transition-all text-center flex items-center justify-center gap-2 hover:text-cyan-300">
+                <i class="fa-solid fa-code text-indigo-400 text-xs"></i>
+                <span data-i18n="hero-btn-projects">استعراض المشاريع</span>
+              </a>
+            </div>
+
+            <!-- Social Links & Profiles -->
+            <div class="flex items-center gap-3.5 pt-4 text-slate-400">
+              <span class="text-xs uppercase tracking-wider font-mono text-slate-500" data-i18n="hero-connect">تواصل مباشر:</span>
+              <a href="https://wa.me/201158069575" target="_blank" title="WhatsApp" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-emerald-500/20 hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/40 flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+              </a>
+              <a href="mailto:kodousyosefhamdey@gmail.com" title="Email" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-cyan-500/20 hover:text-cyan-400 border border-slate-700 hover:border-cyan-500/40 flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fa-solid fa-envelope text-base"></i>
+              </a>
+              <a href="tel:01158069575" title="Call" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-purple-500/20 hover:text-purple-400 border border-slate-700 hover:border-purple-500/40 flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fa-solid fa-phone text-base"></i>
+              </a>
+              <a href="https://github.com/YousefHamdey" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-700 hover:text-white border border-slate-700 flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fa-brands fa-github text-base"></i>
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Hero Image & Interactive Badge Display -->
+          <div class="lg:col-span-5 relative flex justify-center order-1 lg:order-2">
+            
+            <div class="relative w-full max-w-[340px] sm:max-w-[380px]">
+              
+              <!-- Floating Badge 1: CS50 Harvard Certified -->
+              <div class="absolute -top-5 -left-4 sm:-left-8 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-amber-500/40 backdrop-blur-md shadow-2xl flex items-center gap-2.5 z-30 animate-float">
+                <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-award"></i>
+                </div>
+                <div>
+                  <div class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Harvard University</div>
+                  <div class="text-xs font-bold text-white font-mono">CS50 Certified</div>
+                </div>
+              </div>
+
+              <!-- Floating Badge 2: Tiba Academy CS -->
+              <div class="absolute -bottom-5 -right-4 sm:-right-8 px-4 py-2.5 rounded-2xl bg-slate-900/90 border border-cyan-500/40 backdrop-blur-md shadow-2xl flex items-center gap-2.5 z-30 animate-float-slow">
+                <div class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                  <div class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">Tiba Academy</div>
+                  <div class="text-xs font-bold text-white font-mono">CS & IS • 3rd Year</div>
+                </div>
+              </div>
+
+              <!-- Floating Badge 3: Tech Languages Pill -->
+              <div class="absolute top-1/2 -right-6 sm:-right-10 px-3.5 py-2 rounded-xl bg-slate-900/90 border border-purple-500/30 backdrop-blur-md shadow-xl flex items-center gap-2 z-30 hidden sm:flex">
+                <i class="fa-brands fa-python text-yellow-400 text-lg"></i>
+                <i class="fa-brands fa-js text-amber-400 text-lg"></i>
+                <i class="fa-brands fa-java text-rose-400 text-lg"></i>
+              </div>
+
+              <!-- USER PROFILE IMAGE WITH GLOW -->
+              <div class="profile-glow-wrapper rounded-[2.2rem]">
+                <div class="relative rounded-[2rem] overflow-hidden glass-card border border-white/10 shadow-2xl bg-slate-950 aspect-[3/4] group">
+                  
+                  <img 
+                    src="assets/profile.png" 
+                    alt="Yousef Hamdey - Software Developer"
+                    loading="eager"
+                    class="w-full h-full object-cover object-top filter brightness-[1.02] contrast-[1.03] transition-all duration-700 group-hover:scale-105"
+                  >
+
+                  <!-- Subtle Dark Bottom Gradient for Name overlay -->
+                  <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#070a13] via-[#070a13]/70 to-transparent flex flex-col justify-end p-5">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h3 class="text-lg font-bold text-white" data-i18n="name">Yousef Hamdey</h3>
+                        <p class="text-xs text-cyan-400 font-mono">Software Developer & CS Student</p>
+                      </div>
+                      <div class="w-9 h-9 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-xs" title="Ready to work">
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ==================== STATS HIGHLIGHT BAR ==================== -->
+        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div class="glass-card rounded-2xl p-6 text-center border border-slate-800">
+            <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 font-mono mb-1">
+              <span class="counter" data-target="3">0</span><span class="text-cyan-400">rd</span>
+            </div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium" data-i18n="stat-year">السنة الدراسية (علوم حاسب)</div>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 text-center border border-slate-800">
+            <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 font-mono mb-1">
+              CS50
+            </div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium" data-i18n="stat-cs50">تدريب جامعة هارفارد المرموق</div>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 text-center border border-slate-800">
+            <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500 font-mono mb-1">
+              <span class="counter" data-target="5">0</span>+
+            </div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium" data-i18n="stat-languages">لغات برمجية وتقنيات متقنة</div>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 text-center border border-slate-800">
+            <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-500 font-mono mb-1">
+              <span class="counter" data-target="100">0</span>%
+            </div>
+            <div class="text-xs sm:text-sm text-slate-400 font-medium" data-i18n="stat-learning">شغف وتعلّم سريع مستمر</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about" class="py-24 relative reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-user"></i>
+            <span data-i18n="about-badge">نبذة عنّي</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="about-title">
+            الهدف المهني والرؤية البرمجية
+          </h2>
+          <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <!-- Left Column: Career Objective Box -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="glass-card p-8 rounded-3xl border border-slate-800 relative overflow-hidden group">
+              <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+              
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white text-xl mb-6 shadow-lg shadow-cyan-500/30">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-3" data-i18n="objective-title">الهدف المهني (Career Objective)</h3>
+              <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6" data-i18n="objective-desc">
+                "السعي للانضمام إلى شركة رائدة وبيئة عمل تقنية احترافية أستطيع من خلالها تطبيق معرفتي البرمجية والأكاديمية، وتطوير مهاراتي العملية، والمساهمة الفعالة في تقديم نتائج استثنائية وحلول تقنية مبتكرة."
+              </p>
+
+              <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
+                <span class="flex items-center gap-2 text-cyan-400">
+                  <i class="fa-solid fa-circle-check"></i> High Motivation
+                </span>
+                <span>Fast Learner</span>
+              </div>
+            </div>
+
+            <!-- Quick Academic Info Card -->
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl shrink-0">
+                <i class="fa-solid fa-university"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-white" data-i18n="about-uni">أكاديمية طيبة المتكاملة للعلوم</h4>
+                <p class="text-xs text-slate-400" data-i18n="about-uni-sub">بكالوريوس علوم الحاسب ونظم المعلومات - السنة الثالثة</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Soft Skills Grid from CV -->
+          <div class="lg:col-span-7 space-y-6">
+            <h3 class="text-2xl font-bold text-white leading-snug" data-i18n="about-skills-head">
+              المهارات الشخصية والمهنية (Soft Skills)
+            </h3>
+            <p class="text-slate-400 text-sm sm:text-base leading-relaxed" data-i18n="about-skills-intro">
+              إلى جانب الأساس البرمجي التقني، أتميز بمهارات تواصل عالية وقدرة سريعة على التعلم والتأقلم مع فرق العمل:
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              
+              <!-- Soft Skill 1: Problem Solving -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft1-title">حل المشكلات (Problem Solving)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft1-desc">تفكيك المشكلات المعقدة والتفكير المنطقي لبناء حلول برمجية نظيفة وفعالة.</p>
+                </div>
+              </div>
+
+              <!-- Soft Skill 2: Fast Learning -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft2-title">التعلم السريع (Quick Learning)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft2-desc">شغف مستمر لاكتساب التقنيات والأدوات الجديدة واستيعابها في وقت قياسي.</p>
+                </div>
+              </div>
+
+              <!-- Soft Skill 3: Teamwork -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-people-group"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft3-title">العمل الجماعي (Teamwork)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft3-desc">تعاون مثمر مع أعضاء الفريق وتبادل المعرفة لإنجاح المشاريع المشتركة.</p>
+                </div>
+              </div>
+
+              <!-- Soft Skill 4: Communication -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-comments"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft4-title">التواصل الفعال (Communication)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft4-desc">وضوح كامل في الشرح ومهارات متميزة في خدمة العملاء والتفاعل الإيجابي.</p>
+                </div>
+              </div>
+
+              <!-- Soft Skill 5: Time Management -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft5-title">إدارة الوقت (Time Management)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft5-desc">الالتزام بالمواعيد النهائية وترتيب الأولويات بكفاءة عالية.</p>
+                </div>
+              </div>
+
+              <!-- Soft Skill 6: Adaptability -->
+              <div class="glass-card p-4 rounded-xl flex items-start gap-3.5 border border-slate-800">
+                <div class="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-shuffle"></i>
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-white mb-1" data-i18n="soft6-title">المرونة والتأقلم (Adaptability)</h4>
+                  <p class="text-xs text-slate-400" data-i18n="soft6-desc">القدرة على التكيف مع التحديات والبيئات التقنية المختلفة بكل سلاسة.</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== WHY HIRE ME ==================== -->
+    <section class="py-20 relative reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>Why me?</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">أسباب تجعلني قيمة حقيقية لأي فريق تقني</h2>
+          <p class="text-slate-400 text-sm sm:text-base">أجمع بين الأساس الأكاديمي القوي، مهارات التنفيذ العملية، ورغبة حقيقية في النمو داخل بيئة احترافية.</p>
+          <div class="w-20 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">تطبيق عملي وليس فقط نظري</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">أبني مشاريع حقيقية، أعمل على حل مشكلات منطقية، وأتعامل مع تقنيات تطوير الويب والبرمجة الكائنية والبيانات بشكل فعلي.</p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-lightbulb"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">تفكير حلّ المشكلات</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">أمتلك قدرة على تحليل المشكلات المعقدة، تقسيمها إلى أجزاء واضحة، ثم بناء حلول واضحة وقابلة للتنفيذ.</p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">جاهز للنمو السريع</h3>
+            <p class="text-slate-400 text-sm leading-relaxed">أنا أتعلم بسرعة، أتكيف مع البيئات المختلفة، وأحب العمل ضمن فرق إنتاجية متدفقة ومتحفزة لتحقيق نتائج فعالة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EXPERIENCE & HIGHLIGHTS SECTION ==================== -->
+    <section id="experience" class="py-24 relative reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-briefcase"></i>
+            <span data-i18n="exp-badge">الخبرات والإنجازات</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="exp-title">أساس عملي وتجربة مستمرة في التطوير</h2>
+          <p class="text-slate-400 text-sm sm:text-base" data-i18n="exp-sub">أبني خبرتي من خلال مشاريع عملية، حل مشكلات حقيقية، وتعلم مستمر في بيئة تطوير احترافية.</p>
+          <div class="w-20 h-1 bg-gradient-to-r from-amber-500 to-cyan-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-code"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="exp1-title">تطوير واجهات Frontend</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="exp1-desc">قمت ببناء صفحات متنوعة باستخدام HTML و CSS و JavaScript، مع مراعاة تجربة المستخدم، التوافق مع الشاشات المختلفة، والتصميم الجذاب.</p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-diagram-project"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="exp2-title">مشاريع عملية وتطبيقات حقيقية</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="exp2-desc">أعمل على تنفيذ مشاريع برمجية عملية في Python و C و Java، مع التركيز على تنظيم الكود، تحليل المشكلة، واختيار الحل الأنسب وفعليته.</p>
+          </div>
+
+          <div class="glass-card rounded-2xl p-6 border border-slate-800 group">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+              <i class="fa-solid fa-rocket"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="exp3-title">الالتزام والتعلم المستمر</h3>
+            <p class="text-slate-400 text-sm leading-relaxed" data-i18n="exp3-desc">أستمتع بالتعلم السريع، العمل ضمن فرق، وتحويل الأفكار إلى تطبيقات عملية، وأنا دائمًا أبحث عن فرص تنمو بها مهاراتي المهنية.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATION & COURSES SECTION ==================== -->
+    <section id="education" class="py-24 relative bg-slate-950/40 reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span data-i18n="edu-badge">التعليم والدورات</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="edu-title">
+            المسار الأكاديمي والتدريبي
+          </h2>
+          <div class="w-20 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          
+          <!-- Education Card: Tiba Academy -->
+          <div class="glass-card p-8 rounded-3xl border border-slate-800 hover:border-cyan-500/40 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl shadow-inner">
+                  <i class="fa-solid fa-university"></i>
+                </div>
+                <span class="px-3.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono font-bold">
+                  2022 - الحالي
+                </span>
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-2" data-i18n="edu-card1-title">
+                بكالوريوس علوم الحاسب ونظم المعلومات
+              </h3>
+              <div class="text-sm text-cyan-300 font-semibold mb-4" data-i18n="edu-card1-inst">
+                أكاديمية طيبة (Tiba Academy) - السنة الثالثة
+              </div>
+
+              <p class="text-slate-300 text-sm leading-relaxed mb-6" data-i18n="edu-card1-desc">
+                دراسة شاملة لأساسيات الحوسبة، هياكل البيانات (Data Structures)، الخوارزميات (Algorithms)، نظم إدارة قواعد البيانات، وتصميم البرمجيات ونظم المعلومات.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800">
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Computer Science</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Information Systems</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Third Year</span>
+            </div>
+          </div>
+
+          <!-- Course Card: CS50 Harvard University -->
+          <div class="glass-card p-8 rounded-3xl border border-slate-800 hover:border-amber-500/40 flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl shadow-inner">
+                  <i class="fa-solid fa-award"></i>
+                </div>
+                <span class="px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold">
+                  Harvard University
+                </span>
+              </div>
+
+              <h3 class="text-xl font-bold text-white mb-2" data-i18n="edu-card2-title">
+                CS50: Introduction to Computer Science
+              </h3>
+              <div class="text-sm text-amber-300 font-semibold mb-4" data-i18n="edu-card2-inst">
+                جامعة هارفارد (Harvard University)
+              </div>
+
+              <p class="text-slate-300 text-sm leading-relaxed mb-6" data-i18n="edu-card2-desc">
+                التدريب البرمجي العالمي الأكثر شمولاً وتحدياً. تضمن دراسة لغات البرمجة C و Python و SQL و HTML/CSS و JavaScript، وإدارة الذاكرة، والتفكير الخوارزمي وحل المشكلات الحقيقية.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-800">
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">C Language</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Python</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Memory & Pointers</span>
+              <span class="px-2.5 py-1 rounded-md bg-slate-800 text-xs text-slate-300 font-mono">Web Tech</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== TECHNICAL SKILLS SECTION ==================== -->
+    <section id="skills" class="py-24 relative reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-code"></i>
+            <span data-i18n="skills-badge">المهارات التقنية</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="skills-title">
+            لغات البرمجة والتقنيات الأساسية
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base" data-i18n="skills-sub">
+            المهارات المستندة إلى السيرة الذاتية وتدريب CS50 المكثف
+          </p>
+          <div class="w-20 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full"></div>
+        </div>
+
+        <!-- Technical Skills Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          
+          <!-- Skill 1: Python -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-yellow-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-yellow-500/10 text-yellow-400 flex items-center justify-center text-2xl">
+                <i class="fa-brands fa-python"></i>
+              </div>
+              <span class="text-xs font-mono text-yellow-400 bg-yellow-500/10 px-2.5 py-1 rounded-md">Advanced Level</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Python</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-python-desc">
+              كتابة برمجيات قوية، معالجة البيانات، البرمجة كائنية التوجه (OOP)، والبرمجة النصية وحل المسائل البرمجية.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-yellow-500 to-amber-400 h-full rounded-full" style="width: 90%;"></div>
+            </div>
+          </div>
+
+          <!-- Skill 2: C Programming -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-blue-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-2xl font-mono font-bold">
+                C
+              </div>
+              <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md">Core & Memory</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">C Language</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-c-desc">
+              فهم عميق لإدارة الذاكرة، المؤشرات (Pointers)، هياكل البيانات الأساسية، وتحسين الأداء من تدريب CS50.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Skill 3: Java -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-rose-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-2xl">
+                <i class="fa-brands fa-java"></i>
+              </div>
+              <span class="text-xs font-mono text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-md">OOP Architecture</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Java</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-java-desc">
+              تطبيق مبادئ البرمجة كائنية التوجه (Encapsulation, Inheritance, Polymorphism) وبناء هياكل التطبيقات المنظمة.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-rose-500 to-red-500 h-full rounded-full" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Skill 4: JavaScript -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-amber-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-2xl">
+                <i class="fa-brands fa-js"></i>
+              </div>
+              <span class="text-xs font-mono text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">Interactive Web</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">JavaScript (ES6+)</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-js-desc">
+              تطوير الواجهات التفاعلية، التعامل مع الأحداث، التعامل مع DOM و APIs، وبناء تجارب مستخدم ديناميكية.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-amber-500 to-yellow-500 h-full rounded-full" style="width: 88%;"></div>
+            </div>
+          </div>
+
+          <!-- Skill 5: HTML5 & Modern CSS -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-orange-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-400 flex items-center justify-center text-2xl">
+                <i class="fa-brands fa-html5"></i>
+              </div>
+              <span class="text-xs font-mono text-orange-400 bg-orange-500/10 px-2.5 py-1 rounded-md">Modern Web</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">HTML5 & Web Design</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-html-desc">
+              بناء هياكل صفحات الويب الدلالية (Semantic HTML)، والتصميم المتجاوب التام لجميع الأجهزة والشاشات.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-orange-500 to-amber-500 h-full rounded-full" style="width: 95%;"></div>
+            </div>
+          </div>
+
+          <!-- Skill 6: Problem Solving & Algorithms -->
+          <div class="glass-card p-6 rounded-2xl border border-slate-800 hover:border-cyan-500/40 group">
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-2xl">
+                <i class="fa-solid fa-calculator"></i>
+              </div>
+              <span class="text-xs font-mono text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-md">CS Core</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Algorithms & Problem Solving</h3>
+            <p class="text-slate-400 text-xs leading-relaxed mb-4" data-i18n="skill-algo-desc">
+              تحليل المسائل البرمجية، كفاءة الخوارزميات (Time & Space Complexity)، وتصميم الحلول المنطقية المتقنة.
+            </p>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+              <div class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full" style="width: 92%;"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS SHOWCASE ==================== -->
+    <section id="projects" class="py-24 relative bg-slate-950/40 reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-laptop-code"></i>
+            <span data-i18n="proj-badge">المشاريع والتطبيقات</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white" data-i18n="proj-title">
+            نماذج من المشاريع والأعمال البرمجية
+          </h2>
+          <p class="text-slate-400 text-sm sm:text-base" data-i18n="proj-sub">
+            تطبيقات ومشاريع تعكس الخبرة العملية في Python و C و Java وتطوير الويب
+          </p>
+          <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Project 1: Restaurant landing page -->
+          <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col group">
+            <a href="projects/restaurant/Restaurant.html" target="_blank" rel="noopener noreferrer" class="block h-56 overflow-hidden border-b border-slate-800">
+              <img src="assets/restaurant-preview.png" alt="Restaurant website project preview" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+            </a>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-3">
+                  <span>Restaurant Landing Page</span>
+                  <span class="px-2 py-0.5 rounded bg-cyan-500/20">UI/UX</span>
+                </div>
+                <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
+                  Modern Restaurant Website
+                </h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                  تصميم صفحة هبوط أنيقة ومتجاوبة لمطعم، مع تركيز على تجربة المستخدم، هوية العلامة التجارية، وتنظيم المحتوى بشكل احترافي.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-cyan-300">HTML</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-cyan-300">CSS</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-cyan-300">Responsive</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span>Web Design</span>
+                <a href="projects/restaurant/Restaurant.html" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1">
+                  <span>Open project</span>
+                  <i class="fa-solid fa-arrow-left rtl:rotate-0 ltr:rotate-180"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2: Travel landing page -->
+          <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col group">
+            <a href="projects/travol/travol.html" target="_blank" rel="noopener noreferrer" class="block h-56 overflow-hidden border-b border-slate-800">
+              <img src="assets/travel-preview.png" alt="Travel website project preview" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+            </a>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono text-amber-400 mb-3">
+                  <span>Travel Website</span>
+                  <span class="px-2 py-0.5 rounded bg-amber-500/20">Marketing UI</span>
+                </div>
+                <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+                  Travel & Tourism Landing Page
+                </h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                  صفحة سفر جذابة وموجهة لعرض خدمات السفر، الخصومات، والرحلات، مع تصميم بصري يركز على الانطباع الأول والتفاعل البصري.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-amber-300">HTML</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-amber-300">CSS</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-amber-300">Layouts</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span>Creative Frontend</span>
+                <a href="projects/travol/travol.html" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline flex items-center gap-1">
+                  <span>Open project</span>
+                  <i class="fa-solid fa-arrow-left rtl:rotate-0 ltr:rotate-180"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3: Portfolio / interactive design -->
+          <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 flex flex-col group">
+            <a href="projects/creative-portfolio/Portfolio.html" target="_blank" rel="noopener noreferrer" class="block h-56 overflow-hidden border-b border-slate-800">
+              <img src="assets/creative-preview.avif" alt="Portfolio UX project preview" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105">
+            </a>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono text-indigo-400 mb-3">
+                  <span>Creative Frontend</span>
+                  <span class="px-2 py-0.5 rounded bg-indigo-500/20">Interactive UI</span>
+                </div>
+                <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 transition-colors mb-2">
+                  Game & Visual Experience Demo
+                </h3>
+                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">
+                  تجربة تصميمية تفاعلية تجمع بين الألعاب، الجرافيك، والحركة، وتبرز قدرة على بناء واجهات جذابة من خلال HTML و CSS والتصميم الإبداعي.
+                </p>
+                <div class="flex flex-wrap gap-1.5 mb-6">
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-indigo-300">HTML</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-indigo-300">CSS</span>
+                  <span class="px-2.5 py-1 rounded-md bg-slate-800 text-[11px] font-mono text-indigo-300">Animation</span>
+                </div>
+              </div>
+              <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span>Creative UI</span>
+                <a href="projects/creative-portfolio/Portfolio.html" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline flex items-center gap-1">
+                  <span>Open project</span>
+                  <i class="fa-solid fa-arrow-left rtl:rotate-0 ltr:rotate-180"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="py-24 relative reveal">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider">
+            <i class="fa-solid fa-paper-plane"></i>
+            <span data-i18n="contact-badge">تواصل معي</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white" data-i18n="contact-title">
+            دعنا نتحدث ونبدأ التعاون!
+          </h2>
+          <p class="text-slate-400 text-base sm:text-lg" data-i18n="contact-sub">
+            سواء كانت لديك فرصة تدريب، وظيفة، أو مشروع برمجي – يسعدني دائماً التواصل معك!
+          </p>
+          <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-indigo-600 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Contact Info Cards -->
+          <div class="lg:col-span-5 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl border border-slate-800">
+              <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2.5">
+                <i class="fa-solid fa-address-card text-cyan-400"></i>
+                <span data-i18n="c-info-title">بيانات الاتصال المباشرة</span>
+              </h3>
+
+              <div class="space-y-4">
+                
+                <!-- Phone Item -->
+                <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                      <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs text-slate-400" data-i18n="c-phone">رقم الهاتف</div>
+                      <div class="text-sm font-semibold text-white font-mono" id="phoneText" dir="ltr">01158069575</div>
+                    </div>
+                  </div>
+                  <a href="tel:01158069575" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-emerald-400 font-semibold border border-slate-700 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-phone text-xs"></i>
+                    <span data-i18n="btn-call">اتصال</span>
+                  </a>
+                </div>
+
+                <!-- WhatsApp Quick Chat Item -->
+                <a href="https://wa.me/201158069575" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/40 transition-all group">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                      <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </div>
+                    <div>
+                      <div class="text-xs text-slate-400" data-i18n="c-whatsapp">واتساب مباشر</div>
+                      <div class="text-sm font-semibold text-white font-mono" dir="ltr">+20 115 806 9575</div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-emerald-400 group-hover:translate-x-1 transition-transform flex items-center gap-1 font-semibold">
+                    <span>محادثة فورية</span>
+                    <i class="fa-solid fa-arrow-left rtl:rotate-0 ltr:rotate-180"></i>
+                  </span>
+                </a>
+
+                <!-- Email Item with Copy Button -->
+                <div class="flex items-center justify-between p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+                      <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                      <div class="text-xs text-slate-400" data-i18n="c-email">البريد الإلكتروني</div>
+                      <div class="text-xs sm:text-sm font-semibold text-white font-mono truncate" id="emailText">kodousyosefhamdey@gmail.com</div>
+                    </div>
+                  </div>
+                  <button id="copyEmailBtn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-400 font-semibold border border-slate-700 transition-all flex items-center gap-1.5 shrink-0" title="Copy email">
+                    <i class="fa-regular fa-copy"></i>
+                    <span data-i18n="btn-copy">نسخ</span>
+                  </button>
+                </div>
+
+                <!-- Education / Academic Place -->
+                <div class="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-slate-400" data-i18n="c-loc">الموقع والجامعة</div>
+                    <div class="text-sm font-semibold text-white" data-i18n="c-loc-val">القاهرة، مصر (أكاديمية طيبة - قسم علوم الحاسب)</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Quick Response Guarantee -->
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/90 to-cyan-950/30">
+              <h4 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-cyan-400"></i>
+                <span data-i18n="c-resp-head">استجابة سريعة وتواصل فوري</span>
+              </h4>
+              <p class="text-xs text-slate-400 leading-relaxed" data-i18n="c-resp-body">
+                أرد مباشرة على الرسائل ومحادثات واتساب. لا تتردد في بدء المحادثة لمناقشة أي فرصة أو فكرة مشروع!
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Interactive Contact Form -->
+          <div class="lg:col-span-7">
+            <div class="glass-card p-8 rounded-2xl border border-slate-800 shadow-2xl relative">
+              
+              <h3 class="text-2xl font-bold text-white mb-2" data-i18n="form-head">أرسل رسالة إلى Yousef Hamdey</h3>
+              <p class="text-slate-400 text-sm mb-6" data-i18n="form-sub">اكتب رسالتك، وسيتم فتح واتساب برسالة جاهزة لمراجعتها وإرسالها.</p>
+
+              <form id="contactForm" class="space-y-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="f-name">الاسم *</label>
+                    <input type="text" id="senderName" required placeholder="مثال: Yousef" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none text-white text-sm transition-all placeholder:text-slate-600">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="f-email">البريد الإلكتروني *</label>
+                    <input type="email" id="senderEmail" required placeholder="name@company.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none text-white text-sm transition-all placeholder:text-slate-600" dir="ltr">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="f-subject">موضوع الرسالة</label>
+                  <input type="text" id="senderSubject" placeholder="فرصة عمل / تدريب / مشروع برمجي" class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none text-white text-sm transition-all placeholder:text-slate-600">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-slate-300 mb-2" data-i18n="f-msg">نص الرسالة *</label>
+                  <textarea id="senderMessage" rows="4" required placeholder="اكتب تفاصيل استفسارك أو تفاصيل المشروع..." class="w-full px-4 py-3 rounded-xl bg-slate-900/80 border border-slate-700 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none text-white text-sm transition-all placeholder:text-slate-600 resize-none"></textarea>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-indigo-600 to-purple-600 hover:from-cyan-400 hover:to-indigo-500 text-white font-bold text-sm shadow-xl shadow-cyan-500/25 hover:shadow-cyan-500/50 hover:scale-[1.01] active:scale-95 transition-all flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-paper-plane text-xs"></i>
+                  <span data-i18n="f-submit">إرسال الرسالة الآن</span>
+                </button>
+              </form>
+
+              <!-- WhatsApp handoff notification -->
+              <div id="toastSuccess" class="hidden absolute inset-0 bg-[#0b0f19]/95 backdrop-blur-xl rounded-2xl flex flex-col items-center justify-center p-8 text-center border border-emerald-500/40">
+                <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mb-4 animate-bounce">
+                  <i class="fa-brands fa-whatsapp"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-2" data-i18n="toast-title">رسالتك جاهزة في واتساب</h4>
+                <p class="text-sm text-slate-300 max-w-sm mb-6" data-i18n="toast-desc">راجع الرسالة في واتساب واضغط إرسال لإيصالها إلى Yousef Hamdey.</p>
+                <button id="resetFormBtn" class="px-6 py-2.5 rounded-xl bg-slate-800 text-cyan-400 text-xs font-bold border border-slate-700 hover:bg-slate-700" data-i18n="toast-again">
+                  تعديل الرسالة
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="relative z-10 border-t border-slate-800/80 bg-[#05070d] py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <!-- Brand Copyright -->
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-lg bg-gradient-to-r from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-[10px] text-cyan-100 font-code">&lt;YH/&gt;</span>
+          <span class="text-sm text-slate-400">
+            © <span id="currentYear">2026</span> <span data-i18n="name">Yousef Hamdey</span>. <span data-i18n="footer-rights">جميع الحقوق محفوظة.</span>
+          </span>
+        </div>
+
+        <!-- Built With Badge -->
+        <div class="text-xs text-slate-500 font-mono flex items-center gap-2">
+          <span>Tiba Academy • CS50 Harvard Alumni</span>
+          <i class="fa-solid fa-heart text-cyan-500"></i>
+        </div>
+
+        <!-- Back to Top Button -->
+        <div>
+          <a href="#hero" class="w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-cyan-500 hover:text-black border border-slate-700 text-slate-300 flex items-center justify-center transition-all hover:-translate-y-1" title="Back to top">
+            <i class="fa-solid fa-arrow-up text-sm"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== SCRIPTS & INTERACTIVITY ==================== -->
+  <script>
+    // ----------------------------------------------------
+    // 1. BILINGUAL DICTIONARY (Yousef Hamdey Portfolio)
+    // ----------------------------------------------------
+    const i18n = {
+      ar: {
+        "name": "Yousef Hamdey",
+        "role-badge": "Software Developer • CS Student • Problem Solver",
+        "nav-about": "عنّي",
+        "nav-experience": "الخبرات",
+        "nav-education": "التعليم والشهادات",
+        "nav-skills": "المهارات",
+        "nav-projects": "المشاريع",
+        "nav-contact": "تواصل معي",
+        "btn-whatsapp": "تواصل واتساب",
+        "hero-status": "جاهز للانضمام لبيئة عمل احترافية وفرص جديدة",
+        "hero-greeting": "مرحباً بك، أنا",
+        "hero-i-am": "أنا",
+        "hero-summary": "طالب علوم حاسب ونظم معلومات في أكاديمية طيبة، ولدي أساس قوي في البرمجة وحل المشكلات، مع تدريب احترافي من CS50 بجامعة هارفارد. أعمل على تطوير مهاراتي في Python و C و Java و JavaScript و HTML/CSS، وأبحث عن بيئة عملية تساعدني على بناء خبرة حقيقية والمساهمة في مشاريع ذات قيمة.",
+        "hero-quick-edu": "أكاديمية طيبة - الفرقة الثالثة",
+        "hero-btn-whatsapp": "تواصل عبر واتساب",
+        "hero-btn-contact": "أرسل رسالة",
+        "hero-btn-cv": "تحميل السيرة الذاتية",
+        "hero-btn-projects": "استعراض المشاريع",
+        "hero-connect": "تواصل مباشر:",
+        "stat-year": "السنة الدراسية (علوم حاسب)",
+        "stat-cs50": "تدريب جامعة هارفارد المرموق",
+        "stat-languages": "لغات برمجية وتقنيات متقنة",
+        "stat-learning": "شغف وتعلّم سريع مستمر",
+        "about-badge": "نبذة عنّي",
+        "about-title": "الهدف المهني والرؤية البرمجية",
+        "objective-title": "الهدف المهني (Career Objective)",
+        "objective-desc": "\"أطمح إلى الانضمام إلى فريق تقني احترافي يقدّر التعلم السريع والعمل الجماعي والالتزام بالجودة، حيث أستطيع تطبيق مهاراتي البرمجية، تطوير خبرتي العملية، والمساهمة في بناء حلول فعالة ومبتكرة تدعم أهداف الشركة والعملاء.\"",
+        "about-uni": "أكاديمية طيبة المتكاملة للعلوم",
+        "about-uni-sub": "بكالوريوس علوم الحاسب ونظم المعلومات - السنة الثالثة",
+        "about-skills-head": "المهارات الشخصية والمهنية (Soft Skills)",
+        "about-skills-intro": "إلى جانب الأساس البرمجي التقني، أتميز بمهارات تواصل عالية وقدرة سريعة على التعلم والتأقلم مع فرق العمل:",
+        "soft1-title": "حل المشكلات (Problem Solving)",
+        "soft1-desc": "تفكيك المشكلات المعقدة والتفكير المنطقي لبناء حلول برمجية نظيفة وفعالة.",
+        "soft2-title": "التعلم السريع (Quick Learning)",
+        "soft2-desc": "شغف مستمر لاكتساب التقنيات والأدوات الجديدة واستيعابها في وقت قياسي.",
+        "soft3-title": "العمل الجماعي (Teamwork)",
+        "soft3-desc": "تعاون مثمر مع أعضاء الفريق وتبادل المعرفة لإنجاح المشاريع المشتركة.",
+        "soft4-title": "التواصل الفعال (Communication)",
+        "soft4-desc": "وضوح كامل في الشرح ومهارات متميزة في خدمة العملاء والتفاعل الإيجابي.",
+        "soft5-title": "إدارة الوقت (Time Management)",
+        "soft5-desc": "الالتزام بالمواعيد النهائية وترتيب الأولويات بكفاءة عالية.",
+        "soft6-title": "المرونة والتأقلم (Adaptability)",
+        "soft6-desc": "القدرة على التكيف مع التحديات والبيئات التقنية المختلفة بكل سلاسة.",
+        "exp-badge": "الخبرات والإنجازات",
+        "exp-title": "أساس عملي وتجربة مستمرة في التطوير",
+        "exp-sub": "أبني خبرتي من خلال مشاريع عملية، حل مشكلات حقيقية، وتعلم مستمر في بيئة تطوير احترافية.",
+        "exp1-title": "تطوير واجهات Frontend",
+        "exp1-desc": "قمت ببناء صفحات متنوعة باستخدام HTML و CSS و JavaScript، مع مراعاة تجربة المستخدم، التوافق مع الشاشات المختلفة، والتصميم الجذاب.",
+        "exp2-title": "مشاريع عملية وتطبيقات حقيقية",
+        "exp2-desc": "أعمل على تنفيذ مشاريع برمجية عملية في Python و C و Java، مع التركيز على تنظيم الكود، تحليل المشكلة، واختيار الحل الأنسب وفعليته.",
+        "exp3-title": "الالتزام والتعلم المستمر",
+        "exp3-desc": "أستمتع بالتعلم السريع، العمل ضمن فرق، وتحويل الأفكار إلى تطبيقات عملية، وأنا دائمًا أبحث عن فرص تنمو بها مهاراتي المهنية.",
+        "edu-badge": "التعليم والدورات",
+        "edu-title": "المسار الأكاديمي والتدريبي",
+        "edu-card1-title": "بكالوريوس علوم الحاسب ونظم المعلومات",
+        "edu-card1-inst": "أكاديمية طيبة (Tiba Academy) - السنة الثالثة",
+        "edu-card1-desc": "دراسة شاملة لأساسيات الحوسبة، هياكل البيانات (Data Structures)، الخوارزميات (Algorithms)، نظم إدارة قواعد البيانات، وتصميم البرمجيات ونظم المعلومات.",
+        "edu-card2-title": "CS50: Introduction to Computer Science",
+        "edu-card2-inst": "جامعة هارفارد (Harvard University)",
+        "edu-card2-desc": "التدريب البرمجي العالمي الأكثر شمولاً وتحدياً. تضمن دراسة لغات البرمجة C و Python و SQL و HTML/CSS و JavaScript، وإدارة الذاكرة، والتفكير الخوارزمي وحل المشكلات الحقيقية.",
+        "skills-badge": "المهارات التقنية",
+        "skills-title": "لغات البرمجة والتقنيات الأساسية",
+        "skills-sub": "المهارات المستندة إلى السيرة الذاتية وتدريب CS50 المكثف",
+        "skill-python-desc": "كتابة برمجيات قوية، معالجة البيانات، البرمجة كائنية التوجه (OOP)، والبرمجة النصية وحل المسائل البرمجية.",
+        "skill-c-desc": "فهم عميق لإدارة الذاكرة، المؤشرات (Pointers)، هياكل البيانات الأساسية، وتحسين الأداء من تدريب CS50.",
+        "skill-java-desc": "تطبيق مبادئ البرمجة كائنية التوجه (Encapsulation, Inheritance, Polymorphism) وبناء هياكل التطبيقات المنظمة.",
+        "skill-js-desc": "تطوير الواجهات التفاعلية، التعامل مع الأحداث، التعامل مع DOM و APIs، وبناء تجارب مستخدم ديناميكية.",
+        "skill-html-desc": "بناء هياكل صفحات الويب الدلالية (Semantic HTML)، والتصميم المتجاوب التام لجميع الأجهزة والشاشات.",
+        "skill-algo-desc": "تحليل المسائل البرمجية، كفاءة الخوارزميات (Time & Space Complexity)، وتصميم الحلول المنطقية المتقنة.",
+        "proj-badge": "المشاريع والتطبيقات",
+        "proj-title": "نماذج من المشاريع والأعمال البرمجية",
+        "proj-sub": "تطبيقات ومشاريع تعكس الخبرة العملية في Python و C و Java وتطوير الويب",
+        "p1-desc": "تطبيق ويب متكامل لمحاكاة تداول الأسهم وشراء وبيع الأوراق المالية بأسعار حقيقية مع إدارة حسابات المستخدمين وقاعدة بيانات.",
+        "p2-desc": "برنامج بايثون لأتمتة معالجة البيانات واستخراج الإحصائيات وتنظيف المدخلات وتصدير تقارير منظمة بدقة وسرعة فائقة.",
+        "p3-desc": "مشروع يعتمد على لغة C لتحميل قواميس ضخمة في الذاكرة باستخدام بنية Hash Tables و Tries والبحث الفوري عن الكلمات دون أي تسريب ذاكرة (Zero Memory Leaks).",
+        "proj-details": "استفسر عن المشروع",
+        "contact-badge": "تواصل معي",
+        "contact-title": "دعنا نتحدث ونبدأ التعاون!",
+        "contact-sub": "سواء كانت لديك فرصة تدريب، وظيفة، أو مشروع برمجي – يسعدني دائماً التواصل معك!",
+        "c-info-title": "بيانات الاتصال المباشرة",
+        "c-phone": "رقم الهاتف",
+        "btn-call": "اتصال",
+        "c-whatsapp": "واتساب مباشر",
+        "c-email": "البريد الإلكتروني",
+        "btn-copy": "نسخ",
+        "c-loc": "الموقع والجامعة",
+        "c-loc-val": "القاهرة، مصر (أكاديمية طيبة - قسم علوم الحاسب)",
+        "c-resp-head": "استجابة سريعة وتواصل فوري",
+        "c-resp-body": "أرد مباشرة على الرسائل ومحادثات واتساب. لا تتردد في بدء المحادثة لمناقشة أي فرصة أو فكرة مشروع!",
+        "form-head": "أرسل رسالة إلى Yousef Hamdey",
+        "form-sub": "اكتب رسالتك، وسيتم فتح واتساب برسالة جاهزة لمراجعتها وإرسالها.",
+        "f-name": "الاسم الكريم *",
+        "f-email": "البريد الإلكتروني *",
+        "f-subject": "موضوع الرسالة",
+        "f-msg": "نص الرسالة *",
+        "f-submit": "إرسال الرسالة الآن",
+        "toast-title": "رسالتك جاهزة في واتساب",
+        "toast-desc": "راجع الرسالة في واتساب واضغط إرسال لإيصالها إلى Yousef Hamdey.",
+        "toast-again": "تعديل الرسالة",
+        "footer-rights": "جميع الحقوق محفوظة."
+      },
+      en: {
+        "name": "Yousef Hamdey",
+        "role-badge": "Software Dev & CS Student",
+        "nav-about": "About",
+        "nav-experience": "Experience",
+        "nav-education": "Education & Courses",
+        "nav-skills": "Skills",
+        "nav-projects": "Projects",
+        "nav-contact": "Contact",
+        "btn-whatsapp": "WhatsApp Chat",
+        "hero-status": "Ready for Professional Roles & Opportunities",
+        "hero-greeting": "Hello, I am",
+        "hero-i-am": "I'm a",
+        "hero-summary": "Third-year Computer Science and Information Systems student at Tiba Academy. Armed with a strong foundation in programming and problem-solving, trained through Harvard University's CS50, with proven skills in Python, C, Java, JavaScript, and HTML.",
+        "hero-quick-edu": "Tiba Academy - 3rd Year CS",
+        "hero-btn-whatsapp": "Chat on WhatsApp",
+        "hero-btn-contact": "Send a Message",
+        "hero-btn-cv": "Download CV",
+        "hero-btn-projects": "Explore Projects",
+        "hero-connect": "Direct Contact:",
+        "stat-year": "Academic Year (Computer Science)",
+        "stat-cs50": "Harvard University Training",
+        "stat-languages": "Programming Languages & Tech",
+        "stat-learning": "Fast Learner & Adaptability",
+        "about-badge": "About Me",
+        "about-title": "Career Objective & Vision",
+        "objective-title": "Career Objective",
+        "objective-desc": "\"To join a reputable company where I can apply my technical knowledge, develop my professional skills, and deliver outstanding results in a collaborative, fast-paced environment.\"",
+        "about-uni": "Tiba Academy of Integrated Sciences",
+        "about-uni-sub": "Bachelor's Degree in Computer Science and Information Systems (Third-year)",
+        "about-skills-head": "Soft Skills & Professional Traits",
+        "about-skills-intro": "Alongside solid technical foundations, I bring strong communication, quick problem-solving, and reliable teamwork:",
+        "soft1-title": "Problem Solving",
+        "soft1-desc": "Deconstructing intricate computing challenges into clean, structured algorithmic solutions.",
+        "soft2-title": "Quick Learning",
+        "soft2-desc": "A continuous appetite to learn new technologies, frameworks, and methodologies fast.",
+        "soft3-title": "Teamwork & Collaboration",
+        "soft3-desc": "Cooperating effectively with teams, sharing knowledge, and achieving project goals together.",
+        "soft4-title": "Effective Communication",
+        "soft4-desc": "Crystal-clear verbal and written communication with customer-centric mindset.",
+        "soft5-title": "Time Management",
+        "soft5-desc": "Strict adherence to deadlines and disciplined prioritization of tasks.",
+        "soft6-title": "Adaptability",
+        "soft6-desc": "Thriving across diverse technical environments and embracing new challenges comfortably.",
+        "exp-badge": "Experience & Highlights",
+        "exp-title": "Hands-on practice and continuous growth in development",
+        "exp-sub": "I build my experience through real projects, problem solving, and consistent learning in a professional tech environment.",
+        "exp1-title": "Frontend Development",
+        "exp1-desc": "I have built varied web pages using HTML, CSS, and JavaScript with attention to user experience, responsive design, and visual clarity.",
+        "exp2-title": "Practical Projects & Applications",
+        "exp2-desc": "I work on real software projects in Python, C, and Java, focusing on clean code, problem analysis, and efficient solution design.",
+        "exp3-title": "Commitment & Continuous Learning",
+        "exp3-desc": "I enjoy fast learning, team collaboration, and turning ideas into working applications while improving my professional skill set.",
+        "edu-badge": "Education & Courses",
+        "edu-title": "Academic & Training Background",
+        "edu-card1-title": "Bachelor's Degree in CS & Information Systems",
+        "edu-card1-inst": "Tiba Academy (Third-year)",
+        "edu-card1-desc": "Comprehensive curriculum covering computing fundamentals, data structures, algorithms, database management systems, and software engineering.",
+        "edu-card2-title": "CS50: Introduction to Computer Science",
+        "edu-card2-inst": "Harvard University",
+        "edu-card2-desc": "The gold-standard computer science course covering low-level memory management in C, Python, SQL, web development, and problem sets with rigorous grading.",
+        "skills-badge": "Technical Skills",
+        "skills-title": "Core Languages & Tech Stack",
+        "skills-sub": "Verified technical skill set from curriculum and CS50 training",
+        "skill-python-desc": "Robust software development, data parsing, Object-Oriented Programming (OOP), and algorithmic problem solving.",
+        "skill-c-desc": "Deep understanding of pointers, dynamic memory allocation, foundational data structures, and memory safety.",
+        "skill-java-desc": "Applying clean OOP design patterns (Encapsulation, Inheritance, Polymorphism) and structured application logic.",
+        "skill-js-desc": "Interactive web development, event handling, DOM manipulation, asynchronous programming, and APIs.",
+        "skill-html-desc": "Semantic markup, modern layout techniques, and fully responsive multi-device design.",
+        "skill-algo-desc": "Complexity analysis (Big O), problem deconstruction, and structured logical thinking.",
+        "proj-badge": "Featured Work",
+        "proj-title": "Selected Projects & Codebases",
+        "proj-sub": "Practical implementations in Python, C, Java, and modern web technologies",
+        "p1-desc": "Full-stack web application simulating real-time stock trading with user authentication, live API prices, and SQL database transactions.",
+        "p2-desc": "Python utility for automated data extraction, parsing, cleaning, and exporting structured analytical summaries.",
+        "p3-desc": "High-performance C application implementing hash tables and tries for ultra-fast spell-checking with zero memory leaks.",
+        "proj-details": "Inquire About Project",
+        "contact-badge": "Contact Me",
+        "contact-title": "Let's Connect & Collaborate!",
+        "contact-sub": "Whether you have an internship, job opportunity, or project — I'd love to hear from you!",
+        "c-info-title": "Direct Contact Details",
+        "c-phone": "Phone Number",
+        "btn-call": "Call",
+        "c-whatsapp": "WhatsApp Direct",
+        "c-email": "Email Address",
+        "btn-copy": "Copy",
+        "c-loc": "Location & University",
+        "c-loc-val": "Cairo, Egypt (Tiba Academy - Computer Science Dept.)",
+        "c-resp-head": "Quick Response Guaranteed",
+        "c-resp-body": "I actively reply to WhatsApp messages and emails within hours. Don't hesitate to reach out anytime!",
+        "form-head": "Send Yousef Hamdey a Message",
+        "form-sub": "Fill out the form and WhatsApp will open with a message ready for you to review and send.",
+        "f-name": "Your Name *",
+        "f-email": "Your Email *",
+        "f-subject": "Subject",
+        "f-msg": "Your Message *",
+        "f-submit": "Send Message Now",
+        "toast-title": "Your message is ready in WhatsApp",
+        "toast-desc": "Review the message in WhatsApp and tap Send to deliver it to Yousef Hamdey.",
+        "toast-again": "Edit message",
+        "footer-rights": "All rights reserved."
+      }
+    };
+
+    let currentLang = 'ar';
+
+    const typePhrases = {
+      ar: [
+        "طالب علوم حاسب ونظم معلومات",
+        "مطور برمجيات واعد (Software Developer)",
+        "خريج تدريب CS50 - جامعة هارفارد",
+        "محب لحل المشكلات والتعلم السريع"
+      ],
+      en: [
+        "Computer Science & IS Student",
+        "Software Developer & Problem Solver",
+        "CS50 Trained (Harvard University)",
+        "Python, C, Java & JS Enthusiast"
+      ]
+    };
+
+    function updateLanguage(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      const body = document.body;
+      const langLabel = document.getElementById('langLabel');
+
+      if (lang === 'ar') {
+        html.setAttribute('dir', 'rtl');
+        html.setAttribute('lang', 'ar');
+        body.classList.remove('lang-en');
+        langLabel.textContent = 'English';
+      } else {
+        html.setAttribute('dir', 'ltr');
+        html.setAttribute('lang', 'en');
+        body.classList.add('lang-en');
+        langLabel.textContent = 'العربية';
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) {
+          el.textContent = i18n[lang][key];
+        }
+      });
+
+      currentPhraseIndex = 0;
+      charIndex = 0;
+      isDeleting = false;
+    }
+
+    document.getElementById('langToggle').addEventListener('click', () => {
+      updateLanguage(currentLang === 'ar' ? 'en' : 'ar');
+    });
+
+    // ----------------------------------------------------
+    // 2. TYPEWRITER EFFECT
+    // ----------------------------------------------------
+    const typedTextEl = document.getElementById('typedText');
+    let currentPhraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function handleTypewriter() {
+      const phrases = typePhrases[currentLang];
+      const currentFullPhrase = phrases[currentPhraseIndex % phrases.length];
+
+      if (isDeleting) {
+        typedTextEl.textContent = currentFullPhrase.substring(0, charIndex - 1);
+        charIndex--;
+        typeSpeed = 40;
+      } else {
+        typedTextEl.textContent = currentFullPhrase.substring(0, charIndex + 1);
+        charIndex++;
+        typeSpeed = 85;
+      }
+
+      if (!isDeleting && charIndex === currentFullPhrase.length) {
+        isDeleting = true;
+        typeSpeed = 1900;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        currentPhraseIndex++;
+        typeSpeed = 400;
+      }
+
+      setTimeout(handleTypewriter, typeSpeed);
+    }
+    handleTypewriter();
+
+    // ----------------------------------------------------
+    // 3. INTERACTIVE PARTICLE CANVAS
+    // ----------------------------------------------------
+    const canvas = document.getElementById('particlesCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 140 };
+    let particleFrame = null;
+    let lastParticleFrame = 0;
+    let resizeFrame = null;
+    const particleFrameInterval = 1000 / 30;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resizeCanvas() {
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.25);
+      canvas.width = Math.floor(window.innerWidth * pixelRatio);
+      canvas.height = Math.floor(window.innerHeight * pixelRatio);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      initParticles();
+    }
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(resizeCanvas);
+    }, { passive: true });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.7;
+        this.speedY = (Math.random() - 0.5) * 0.7;
+        this.color = Math.random() > 0.5 ? 'rgba(6, 182, 212, ' : 'rgba(139, 92, 246, ';
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > window.innerWidth) this.speedX *= -1;
+        if (this.y < 0 || this.y > window.innerHeight) this.speedY *= -1;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > 0 && dist < mouse.radius) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            this.x -= (dx / dist) * force * 3;
+            this.y -= (dy / dist) * force * 3;
+          }
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = this.color + this.alpha + ')';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(Math.floor(window.innerWidth / 32), window.innerWidth < 640 ? 20 : 42);
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles(timestamp) {
+      particleFrame = null;
+      if (document.hidden || reducedMotion) return;
+      if (timestamp - lastParticleFrame < particleFrameInterval) {
+        particleFrame = requestAnimationFrame(animateParticles);
+        return;
+      }
+      lastParticleFrame = timestamp;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distanceSquared = dx * dx + dy * dy;
+
+          if (distanceSquared < 12100) {
+            const dist = Math.sqrt(distanceSquared);
+            ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.7;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particleFrame = requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    }, { passive: true });
+
+    window.addEventListener('mouseout', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    resizeCanvas();
+    if (!reducedMotion) particleFrame = requestAnimationFrame(animateParticles);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (particleFrame !== null) cancelAnimationFrame(particleFrame);
+        particleFrame = null;
+      } else if (!reducedMotion && particleFrame === null) {
+        lastParticleFrame = 0;
+        particleFrame = requestAnimationFrame(animateParticles);
+      }
+    });
+
+    // ----------------------------------------------------
+    // 4. CUSTOM CURSOR (Ultra-Smooth GPU Translate3d + Lerp)
+    // ----------------------------------------------------
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorCircle = document.getElementById('cursorCircle');
+    if (window.matchMedia('(pointer: fine)').matches && cursorDot && cursorCircle) {
+      let mouseX = -100, mouseY = -100;
+      let circleX = -100, circleY = -100;
+      let cursorVisible = false;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (!cursorVisible) {
+          cursorVisible = true;
+          cursorDot.style.opacity = '1';
+          cursorCircle.style.opacity = '1';
+          circleX = mouseX;
+          circleY = mouseY;
+        }
+      }, { passive: true });
+
+      function renderCursor() {
+        if (cursorVisible) {
+          // Silky smooth interpolation (lerp)
+          circleX += (mouseX - circleX) * 0.18;
+          circleY += (mouseY - circleY) * 0.18;
+
+          cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+          cursorCircle.style.transform = `translate3d(${circleX}px, ${circleY}px, 0)`;
+        }
+        requestAnimationFrame(renderCursor);
+      }
+      requestAnimationFrame(renderCursor);
+
+      // Lightweight event delegation for hover states
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('a, button, input, textarea, .glass-card, [role="button"]')) {
+          document.body.classList.add('cursor-hover');
+        } else {
+          document.body.classList.remove('cursor-hover');
+        }
+      }, { passive: true });
+    }
+
+    // ----------------------------------------------------
+    // 5. SCROLL PROGRESS & NAVBAR (RAF Throttled, No Thrashing)
+    // ----------------------------------------------------
+    const scrollProgress = document.getElementById('scrollProgress');
+    const navbar = document.getElementById('navbar');
+    let scrollTicking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          const winScroll = window.scrollY || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (docHeight > 0) {
+            scrollProgress.style.width = `${(winScroll / docHeight) * 100}%`;
+          }
+
+          if (winScroll > 40) {
+            if (!navbar.classList.contains('py-2')) navbar.classList.add('py-2', 'shadow-2xl');
+          } else {
+            if (navbar.classList.contains('py-2')) navbar.classList.remove('py-2', 'shadow-2xl');
+          }
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    }, { passive: true });
+
+    // ----------------------------------------------------
+    // 6. ANIMATED COUNTERS ON SCROLL
+    // ----------------------------------------------------
+    const counters = document.querySelectorAll('.counter');
+    let countersStarted = false;
+
+    function runCounters() {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 1600;
+        const stepTime = 25;
+        const totalSteps = duration / stepTime;
+        const increment = target / totalSteps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.ceil(current);
+          }
+        }, stepTime);
+      });
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !countersStarted) {
+          countersStarted = true;
+          runCounters();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.counter').forEach(c => statsObserver.observe(c.parentElement));
+
+    // ----------------------------------------------------
+    // 7. REVEAL SECTIONS ON SCROLL
+    // ----------------------------------------------------
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(r => revealObserver.observe(r));
+
+    // ----------------------------------------------------
+    // 8. COPY EMAIL BUTTON
+    // ----------------------------------------------------
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    const emailText = document.getElementById('emailText').textContent;
+
+    copyEmailBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(emailText).then(() => {
+        const originalHtml = copyEmailBtn.innerHTML;
+        copyEmailBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> <span class="text-emerald-400">تم النسخ!</span>';
+        setTimeout(() => {
+          copyEmailBtn.innerHTML = originalHtml;
+        }, 2200);
+      });
+    });
+
+    // ----------------------------------------------------
+    // 9. CONTACT FORM SUBMISSION
+    // ----------------------------------------------------
+    const contactForm = document.getElementById('contactForm');
+    const toastSuccess = document.getElementById('toastSuccess');
+    const resetFormBtn = document.getElementById('resetFormBtn');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('senderName').value.trim();
+      const email = document.getElementById('senderEmail').value.trim();
+      const subject = document.getElementById('senderSubject').value.trim();
+      const message = document.getElementById('senderMessage').value.trim();
+      const whatsappMessage = [
+        `رسالة من الموقع`,
+        `الاسم: ${name}`,
+        `البريد الإلكتروني: ${email}`,
+        `الموضوع: ${subject || 'غير محدد'}`,
+        `الرسالة: ${message}`
+      ].join('\n');
+      const whatsappUrl = `https://wa.me/201158069575?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappWindow = window.open(whatsappUrl, '_blank');
+
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+      } else {
+        window.location.assign(whatsappUrl);
+      }
+
+      toastSuccess.classList.remove('hidden');
+    });
+
+    resetFormBtn.addEventListener('click', () => {
+      contactForm.reset();
+      toastSuccess.classList.add('hidden');
+    });
+
+    // ----------------------------------------------------
+    // 10. MOBILE HAMBURGER DRAWER
+    // ----------------------------------------------------
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

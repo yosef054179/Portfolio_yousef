@@ -1,0 +1,42 @@
+Yousef Hamdey
+Software Developer • Computer Science Student
+
+Contact
+Phone: 01158069575
+Email: kodousyosefhamdey@gmail.com
+WhatsApp: https://wa.me/201158069575
+Location: Cairo, Egypt
+GitHub: https://github.com/YousefHamdey
+
+Profile
+Computer Science and Information Systems student at Tiba Academy, with a strong technical foundation and genuine interest in solving real-world programming problems. Trained through Harvard University's CS50 course, with practical experience in Python, C, Java, JavaScript, HTML, and CSS. Looking for an opportunity to grow in a professional environment and contribute to impactful software projects.
+
+Education
+- Tiba Academy, Computer Science and Information Systems - 3rd Year
+- Harvard University - CS50: Introduction to Computer Science
+
+Core Skills
+- Python
+- C
+- Java
+- JavaScript
+- HTML / CSS
+- Problem Solving
+- Data Structures & Algorithms
+- OOP Fundamentals
+- Responsive Web Design
+
+Projects & Experience
+- Portfolio and landing pages for business and creative front-end projects
+- Interactive web pages with responsive layouts and polished UI/UX
+- Practical coding projects focused on algorithmic thinking and software fundamentals
+
+Soft Skills
+- Quick learner
+- Teamwork and communication
+- Time management
+- Adaptability
+- Problem solving
+
+Career Objective
+To join a professional tech environment where I can apply my programming skills, continue learning, and contribute meaningfully to the development of high-quality digital products.

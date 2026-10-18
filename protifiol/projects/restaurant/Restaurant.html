@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 3C Restaurant</title>
+  <style>
+    :root {
+      --bg: #120d0b;
+      --panel: #1b1412;
+      --card: #241b18;
+      --soft: #f2e3d1;
+      --gold: #d7a86d;
+      --orange: #e08d3d;
+      --muted: #c9b7a6;
+      --line: rgba(255,255,255,0.09);
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #0d0908 0%, #17110f 100%);
+      color: var(--soft);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 28px 18px;
+    }
+
+    .wrap {
+      width: min(1180px, 100%);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      border-radius: 18px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 24px var(--shadow);
+    }
+
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    .logo span {
+      color: #fff;
+    }
+
+    .tag {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .header h1 {
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: var(--muted);
+      font-size: 0.96rem;
+      letter-spacing: 0.7px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 14px 28px var(--shadow);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(215, 168, 109, 0.35);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #2a1f1b;
+    }
+
+    .card-body {
+      padding: 18px 16px 20px;
+      text-align: center;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .price {
+      color: var(--gold);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      background: linear-gradient(180deg, #f0a854, #d78834);
+      color: #1c110d;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn:hover {
+      opacity: 0.92;
+    }
+
+    .footer {
+      margin-top: 30px;
+      padding: 18px 14px 12px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="logo">Happy <span>3C</span></div>
+      <div class="tag">Fresh • Fast • Tasty</div>
+    </div>
+
+    <header class="header">
+      <h1>Restaurant Menu</h1>
+      <p>Best meals for every taste and every mood</p>
+    </header>
+
+    <section class="menu-grid">
+      <article class="card">
+        <img src="img4.jpg" alt="Smoked Chicken Burger">
+        <div class="card-body">
+          <h3>Smoked Chicken Burger</h3>
+          <p class="price">$5.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img5.jpg" alt="Double Sandwich Meal">
+        <div class="card-body">
+          <h3>Double Sandwich Meal</h3>
+          <p class="price">$6.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img6.jpg" alt="Family Sandwich Feast">
+        <div class="card-body">
+          <h3>Family Sandwich Feast</h3>
+          <p class="price">$10.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img7.jpg" alt="Italian Pizza Extra Cheese">
+        <div class="card-body">
+          <h3>Italian Pizza Extra Cheese</h3>
+          <p class="price">$8.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img8.jpg" alt="Pepperoni Pizza">
+        <div class="card-body">
+          <h3>Pepperoni Pizza</h3>
+          <p class="price">$7.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img9.jpg" alt="Crunch Meal Combo">
+        <div class="card-body">
+          <h3>Crunch Meal Combo</h3>
+          <p class="price">$9.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img10.jpg" alt="BBQ Burger with Fries">
+        <div class="card-body">
+          <h3>BBQ Burger + Fries</h3>
+          <p class="price">$11.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img11.jpg" alt="Two Sandwiches and Cola">
+        <div class="card-body">
+          <h3>Two Sandwiches + Cola</h3>
+          <p class="price">$7.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img4.jpg" alt="Sandwich Combo with Fries">
+        <div class="card-body">
+          <h3>Sandwich Combo + Fries</h3>
+          <p class="price">$9.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img5.jpg" alt="Pepperoni and Cheese Special">
+        <div class="card-body">
+          <h3>Pepperoni & Cheese Special</h3>
+          <p class="price">$10.99</p>
+          <button class="btn">Order Now</button>
+        </div>
+      </article>
+    </section>
+
+    <div class="footer">
+      <span>Phone: 0123456789</span>
+      <span>Email: fastfood@3c.com</span>
+    </div>
+  </div>
+</body>
+</html>

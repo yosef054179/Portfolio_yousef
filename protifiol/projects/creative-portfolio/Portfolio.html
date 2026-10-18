@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #252626 0%, #2e2e2e 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        header .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .languages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .language-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .language-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .language-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            padding: 30px;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 10px;
+        }
+
+        .project-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .project-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #333;
+            color: white;
+            margin-top: 60px;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .section {
+                padding: 20px;
+                margin: 30px 0;
+            }
+            .languages,
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hello, I'm Youssef</h1>
+        <p>Welcome to my portfolio website!</p>
+        <p class="subtitle">I’m a student who enjoys learning new things, especially in coding and technology.</p>
+    </header>
+    <div class="container">
+        <section class="section">
+            <h2>Programming Languages I Have Learned</h2>
+            <div class="languages">
+                <div class="language-item">
+                    <h3>Java</h3>
+                    <p>I learned Java and used it to understand programming basics and logic.</p>
+                </div>
+                <div class="language-item">
+                    <h3>Python</h3>
+                    <p>Python is one of the languages I enjoy using because it is simple and useful for learning.</p>
+                </div>
+                <div class="language-item">
+                    <h3>HTML & CSS</h3>
+                    <p>I use HTML and CSS to create web pages and make them look better and easier to use.</p>
+                </div>
+                <div class="language-item">
+                    <h3>Scratch</h3>
+                    <p>I also worked with Scratch, which helped me understand coding ideas in a fun and visual way.</p>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <img src="shark.jpg" alt="Happy Shark" class="project-image">
+                    <h3>Happy Shark</h3>
+                    <p>A simple game where you control a shark and try to avoid obstacles while moving forward.</p>
+                </div>
+                <div class="project-card">
+                    <img src="maze.avif" alt="Maze Game" class="project-image">
+                    <h3>Maze Game</h3>
+                    <p>A maze game where the player has to find the way out by moving through the paths.</p>
+                </div>
+                <div class="project-card">
+                    <img src="snowman.jpg" alt="Snow Game" class="project-image">
+                    <h3>Snow Game</h3>
+                    <p>A fun project with a winter theme, where the player interacts with the scene and moves around the game.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        © 2024 Coding School. All rights reserved.
+    </footer>
+</body>
+</html>
